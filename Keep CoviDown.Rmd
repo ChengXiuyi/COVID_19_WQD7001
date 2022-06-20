@@ -1,0 +1,114 @@
+---
+title       : <span style = "font-size:125%; font-family:Roboto; font-style:normal"> Keep CoviDown</span>
+subtitle    : Covid-19 Correlation Analysis in Malaysia 
+
+author: 
+  - Brought To You By - Team SunShine (Group 9)
+  - Cheng Xiuyi	  - S2149682
+  - Suet Ling Ku 	- S2133418
+  - Xu Zhang 	    - S2151000
+  - Zuoge Chen 	  - S2125783
+  - Yanzhen Xu 	  - S2139007
+date        : '20 June 2022'
+
+output      : 
+  slidy_presentation:
+    font_adjustment: +2
+    toc: true
+    toc_depth: 2
+    framework   : html5slides
+    theme       : spacelab
+    highlight   : haddock
+    layout      : slide 
+    knit        : slidify::knito2slides
+    css         : 'styles.css'
+---
+
+# [Overview ]{style="font-size:130%; font-family:Roboto; font-style:normal"}
+
+```{=html}
+<style>body {background-image:url('BG1.png'); background-repeat: no-repeat;}</style>
+```
+Malaysia has transitioned from the Covid-19 pandemic to endemic phase. The main criterion for this transition is the high vaccination coverage and the robust healthcare system. Nevertheless, even in endemicity, the virus still remains within the community. Furthermore, there are threats of new mutated variant strain the could could resurgence of cases. 
+
+Therefore, Keep CoviDown is created to visualize information such as confirmed cases, type of vaccination coverage, mortality cases, by state to keep Malaysians informed and to monitor any outbreak.We have also conducted an analysis of the effectiveness of vaccination program in Malaysia using mortality rate and ICU admissions as indicators. 
+
+<br>
+
+## [Research Questions ]{style="font-size:130%; font-family:Roboto; font-style:normal"}
+<br> 
+
+1.  What is the distribution of Covid-19 confirmed case, mortality case,vaccination coverage in all states of Malaysia?
+
+2.  What brand of vaccine is used in each state in Malaysia?
+
+3.  What is the relationship between vaccination coverage and the ICU admission?
+
+4. What is the relationship between vaccination coverage and the mortality rate? 
+
+# [Data Science Methodology ]{style="font-size:125%; font-family:Roboto; font-style:normal"}
+
+```{r out.width= "90%", fig.align = "center", echo =  FALSE}
+knitr:: include_graphics("/Users/suetlingku/Desktop/Covid-19 EDA/DS1.png")
+```
+<br>
+<br>
+For this study, we have mapped out the cumulative number of confirmed case, mortality case, and vaccination coverage of each state.
+Then we compare each states vaccination coverage, to analyze the mortality case and Covid-19 ICU admission.  
+
+
+
+# [ Findings]{style="font-size:130%; font-family:Roboto; font-style:normal"}
+
+```{r, figure-side, fig.show = "hold", out.width = "50%", message= FALSE, echo = FALSE}
+library(ggplot2)
+library(grid)
+data <- read.csv("vax_state_icu.csv")
+ggplot(data = data, aes(x=vaccine_percent,y=icu_covid_rate))+
+          geom_point(size=2,color="blue")+ geom_smooth(method = lm, se=FALSE) +
+          labs(x = "Percentage of Vaccinated Population ", 
+          y = "ICU_admissions ", title = "Correlation plot of Covid-ICU Admissions and Vaccinated Population ") ->G1
+
+G1 + geom_label(aes(label = state), size = 3.5, hjust = -0.1)
+  
+data2 <- read.csv("mor_vac_state.csv")
+ggplot(data = data2, aes(x=vaccine_percent,y=mortality_rate))+
+          geom_point(size=2,color="red")+ geom_smooth(method = lm, se=FALSE) +
+          labs(x = "Percentage of Vaccinated Population ", 
+          y = "Mortality Rate ", title = "Correlation plot of Mortality Rate and Vaccinated Population ") -> G2
+
+G2 + geom_label(aes(label = state), size = 3.5, hjust = -0.1)
+```
+<br>  
+From the analysis, we found is negative correlation between Covid-19 ICU Admissions and Percentage of Vaccinated Population. Furthermore, there is also negative correlation between Covid-19 Mortality Rates and Percentage of Vaccinated Population. This is evidence that more vaccinated population significantly reduce the severity of Covid-19 medical outcomes in admission of ICU and mortality. Hence, this shows that the vaccination program is successful in Malaysia. 
+
+<br>  
+Beneficiaries
+-   The Malaysian Public
+-   The Malaysian Government
+-   The Vaccine Manufacturers
+
+------------------------------------------------------------------------
+
+# Project Experience, Links, Reference
+
+This is our first experience developing a R Shiny app.\
+- It is a challenging project, but we have greatly benefited from this project.\
+- We have gained more R programming skills.\
+- We have developed with data product. (It is high iterative process).\
+- Develop a data product story with the public interest in mind.\
+- Learnt to work together as a team.
+
+<br>
+
+## [ Reference ]{style="font-size:130%; font-family:Roboto; font-style:normal"}
+
+-   <https://github.com/MoH-Malaysia/covid19-public>
+-   <https://covidnow.moh.gov.my/>
+
+<br>
+
+## [ Have A Look ]{style="font-size:130%; font-family:Roboto; font-style:normal"}
+
+-   Shiny App: <https://sunshine7001.shinyapps.io/covid-19/>\
+-   GitHub : <https://github.com/ChengXiuyi/COVID_19_WQD7001>\
